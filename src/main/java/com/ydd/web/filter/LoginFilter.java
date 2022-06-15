@@ -21,7 +21,6 @@ public class LoginFilter implements Filter {
                 return;
             }
         }
-        System.out.println("123");
         Object user = session.getAttribute("user");
         if(user!=null){
             chain.doFilter(request, response);
