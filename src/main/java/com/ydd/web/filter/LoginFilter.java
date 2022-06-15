@@ -22,7 +22,7 @@ public class LoginFilter implements Filter {
             }
         }
         Object user = session.getAttribute("user");
-        System.out.println(user);
+        System.out.println("dwadawd");
         if(user!=null){
             chain.doFilter(request, response);
         }else {
