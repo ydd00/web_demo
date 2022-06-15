@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<html>
+<head>
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <!-- 引入组件库 -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+</head>
+<body>
+<div id="app">
+  <el-button type="primary" round>新增</el-button>
+<table id="brandTable" width="500" border="1" cellspacing="0">
+    <tr>
+        <th>序号</th>
+        <th>品牌名</th>
+        <th>公司名</th>
+        <th>ordered</th>
+        <th>描述</th>
+        <th>状态</th>
+        <th>操作</th>
+    </tr>
+
+    <tr  v-for="(brand,i) in brands" align="center">
+        <td>{{i+1}}}</td>
+        <td>{{brand.brand_name}}</td>
+        <td>{{brand.company_name}}</td>
+        <td>{{brand.ordered}}</td>
+        <td>{{brand.description}}</td>
+        <td>{{brand.statusStr}}</td>
+        <td><a href="#">修改</a> <el-button type="danger">删除</el-button></td>
+    </tr>
+
+</table>
+</div>
+
+<script>
+  new Vue({
+    el:"#app",
+    data:{
+      brands:[]
+    },
+    mounted(){
+      var _this=this;
+      axios({
+        method:"get",
+        url:"http://localhost:8080/web_demo/selectall1"
+      }).then(function (resp){
+        _this.brands = resp.data;
+      })
+    }
+  })
+   /* window.onload=function (){
+        axios({
+            method:"POSt",
+            url:"http://localhost:8080/web_demo/selectall1"
+        }).then(function (resp){
+            let brands = resp.data;
+            branddata="<tr>\n" +
+                "        <th>序号</th>\n" +
+                "        <th>品牌名</th>\n" +
+                "        <th>公司名</th>\n" +
+                "        <th>ordered</th>\n" +
+                "        <th>描述</th>\n" +
+                "        <th>状态</th>\n" +
+                "        <th>操作</th>\n" +
+                "    </tr>"
+            for (let i=0;i<brands.length;i++){
+                let brand = brands[i];
+                branddata+=" <tr>\n" +
+                    "        <td>"+(i+1)+"</td>\n" +
+                    "        <td>"+brand.brand_name+"</td>\n" +
+                    "        <td>"+brand.company_name+"</td>\n" +
+                    "        <td>"+brand.ordered+"</td>\n" +
+                    "        <td>"+brand.description+"</td>\n" +
+                    "        <td>"+brand.status+"</td>\n" +
+                    "         <td><a href=\"#\">修改</a> <a href=\"#\">删除</a></td>\n" +
+                    "    </tr>"
+            }
+            document.getElementById("brandTable").innerHTML=branddata;
+        })
+    }*/
+</script>
+
+</body>
+</html>

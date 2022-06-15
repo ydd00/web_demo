@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>黑马旅游网-登录</title>
+    <link rel="stylesheet" type="text/css" href="http://localhost:8080/web_demo/css/common.css">
+    <link rel="stylesheet" type="text/css" href="http://localhost:8080/web_demo/css/login.css">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <!-- 引入组件库 -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+</head>
+
+<body>
+<!--引入头部-->
+<div id="header"></div>
+<!-- 头部 end -->
+<section id="login_wrap">
+    <div class="fullscreen-bg" style="background: url(http://localhost:8080/web_demo/img/login_bg.png);height: 600px;">
+
+    </div>
+    <div id="app" class="login-box">
+        <div class="title">
+            <img src="../img/login_logo.png" alt="">
+            <span>注册账户</span>
+        </div>
+        <div class="login_inner">
+
+            <!--登录错误提示消息-->
+
+            <form target="_self" id="loginForm" action="/web_demo/adduser" method="post" accept-charset="utf-8">
+                <input  v-on:blur="show()" id="username" name="username" type="text" placeholder="请输入账号" autocomplete="off" v>
+                <span type="text"  id="username_err"  style="display: none;color: #a94442"  >用户名已存在</span>
+                <input name="password" type="text" placeholder="请输入密码" autocomplete="off">
+                <br>
+
+                验证码<input id="checkcode" name="write_checkcode" type="text">
+                <img id="checkcodeImg" src="/web_demo/checkcode">
+                <span type="text"  id="checkcode_err"  style="display: none" ></span>
+                <a href="#" id="changeImg">看不清？换一张</a>
+                <div class="submit_btn">
+                    <button type="submit" id="btn_sub">注册</button>
+                </div>
+            </form>
+            <div class="reg">已有帐号<a href="login.jsp">立即登录</a></div>
+        </div>
+    </div>
+</section>
+<script>
+    new Vue({
+        el:"#app",
+        data:{
+          username:""
+        },
+        method:{
+            show(){
+              alert("我被电了")
+            }
+        }
+    })
+</script>
+<script>
+    document.getElementById("username").onblur=function (){
+        var username = this.value;
+        var xhttp;
+        if (window.XMLHttpRequest) {
+            xhttp = new XMLHttpRequest();
+        } else {
+            // code for IE6, IE5
+            xhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xhttp.open("GET", "http://localhost:8080/web_demo/ajax?username="+username);
+        xhttp.send();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                if(this.responseText.trim()=="true"){
+                    document.getElementById("username_err").style.display=""
+                }else {
+                    document.getElementById("username_err").style.display="none"
+                }
+            }
+        };
+    }
+</script>
+
+
+
+</body>
+
+</html>
